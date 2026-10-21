@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "续火 · 抖音表情助手",
+  "version": "1.2.0",
+  "description": "从已有会话选择好友或群聊，定时发送抖音原生表情；本机保存记录，结果不明时停止重试。",
+  "minimum_chrome_version": "120",
+  "permissions": ["storage", "alarms"],
+  "host_permissions": ["https://www.douyin.com/*", "https://douyin.com/*"],
+  "background": {"service_worker": "background.js", "type": "module"},
+  "action": {"default_title": "打开续火助手"},
+  "options_page": "options.html",
+  "content_scripts": [{
+    "matches": ["https://www.douyin.com/*", "https://douyin.com/*"],
+    "js": ["content.js"],
+    "run_at": "document_start"
+  }],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'; connect-src 'none'; img-src 'self' https://*.douyinpic.com https://*.byteimg.com https://*.bytednsdoc.com data:;"
+  }
+}

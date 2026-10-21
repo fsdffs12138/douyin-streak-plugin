@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>续火 · 抖音表情助手</title><link rel="stylesheet" href="options.css"></head>
+<body>
+<div class="app">
+  <header><div class="brand"><span class="logo">续</span><div><h1>续火</h1><p>抖音原生表情助手</p></div></div><div class="header-actions"><span id="connection" class="badge">尚未绑定</span><button id="pause" class="quiet">暂停全部</button></div></header>
+  <div id="notice" role="status" aria-live="polite" class="notice">先绑定已登录的聊天页，再选择会话和表情。自动发送默认关闭。</div>
+  <main>
+    <section class="workspace">
+      <section class="panel">
+        <div class="section-title"><div><h2>01 <span>连接聊天页面</span></h2><p>保持此聊天页打开。刷新页面或重启浏览器后需要重新绑定。</p></div><button id="refreshTabs" class="quiet">刷新列表</button></div>
+        <div class="inline"><label class="grow">抖音标签页<select id="tabs"><option value="">正在读取…</option></select></label><button id="bind" class="primary">绑定页面</button></div>
+        <p class="footnote">使用前请停用旧续火插件并刷新抖音。身份核对使用昵称与头像；更换昵称或头像后需重新选择。</p>
+      </section>
+      <section class="panel">
+        <div class="section-title"><div><h2>02 <span>选择发送对象</span></h2><p>读取已有会话，不使用模糊昵称搜索。</p></div><button id="readPeople">读取会话</button></div>
+        <div class="list-tools"><input id="peopleFilter" type="search" placeholder="筛选会话" aria-label="筛选会话"><select id="conversationKind" aria-label="会话类型"><option value="">全部会话</option><option value="person">仅好友</option><option value="group">仅群聊</option></select><span id="peopleCount">已选 0 个会话</span><button id="clearPeople" class="text-button">取消选择</button></div>
+        <div id="people" class="people-list"><p class="empty">绑定后点击「读取会话」，好友和群聊会显示在这里。</p></div>
+        <details id="skippedDetails" hidden><summary id="skippedSummary"></summary><div id="skippedRows"></div></details>
+      </section>
+      <section class="panel">
+        <div class="section-title"><div><h2>03 <span>选择抖音表情</span></h2><p>直接读取原生表情面板。这里选择表情不会发送消息。</p></div><button id="readEmoji">读取表情</button></div>
+        <div class="list-tools"><input id="emojiFilter" type="search" placeholder="搜索表情名称" aria-label="搜索表情名称"><select id="emojiKind" aria-label="表情类型"><option value="">全部类型</option><option value="sticker">贴纸 / 大表情</option><option value="small">普通小表情</option></select></div>
+        <div id="emojis" class="emoji-grid"><p class="empty">请先在抖音打开任意会话，再读取表情。</p></div>
+      </section>
+    </section>
+    <aside>
+      <section class="panel schedule">
+        <h2>发送计划</h2>
+        <div id="preview" class="preview"><span class="preview-placeholder">尚未选择表情</span></div>
+        <label>每日发送时间 <span class="muted">北京时间</span><input id="time" type="time" value="09:00" required></label>
+        <div class="two-col"><label>补发窗口 / 分钟<input id="grace" type="number" min="0" max="720" value="180"></label><label>最小间隔 / 秒<input id="gap" type="number" min="10" max="300" value="15"></label></div>
+        <label class="switch-label"><input id="enabled" type="checkbox"><span>启用每日定时发送</span></label>
+        <p class="footnote">浏览器每约 30 秒检查队列。休眠、关闭或登录失效时无法发送；恢复后仅处理当天补发窗口内的任务。</p>
+        <button id="save" class="primary full">保存配置</button>
+        <button id="dry" class="full">只检查，不发送</button>
+        <button id="run" class="full accent">立即发送给所选会话</button>
+        <p id="queueStatus" class="footnote">尚无执行中的任务</p>
+      </section>
+      <section class="panel explain"><h3>状态代表什么？</h3><p><b>网页已出现</b>：发现匹配的本人消息，不代表对方收到或续火成功。</p><p><b>待核查</b>：可能已发送，自动任务停止，不会再次发送。</p><p>同一账号、会话、北京时间日期最多执行一次。没有清空记录后自动重发的入口。</p></section>
+    </aside>
+    <section class="panel history">
+      <div class="section-title"><div><h2>执行记录</h2><p>每个人独立记录，结果不明时保留现场。</p></div><button id="export">导出记录</button></div>
+      <div class="stats"><div><strong id="observedCount">0</strong><span>网页已出现 / 人工确认</span></div><div><strong id="uncertainCount">0</strong><span>待核查</span></div><div><strong id="failedCount">0</strong><span>发送前停止</span></div></div>
+      <div class="table-wrap"><table><thead><tr><th>时间</th><th>会话</th><th>表情</th><th>状态</th><th>详情 / 操作</th></tr></thead><tbody id="records"><tr><td colspan="5" class="empty">还没有发送记录</td></tr></tbody></table></div>
+      <details><summary>运行日志</summary><div id="logs" class="logs">暂无日志</div></details>
+    </section>
+  </main>
+  <footer>续火 1.2.0 · 也可直接使用聊天页内悬浮面板 · 配置与记录仅保存在本机</footer>
+</div>
+<dialog id="confirm"><form method="dialog"><h2>确认立即发送</h2><p id="confirmText"></p><p class="footnote">只执行尚未记录的今日任务。发送后无法由本插件撤回。</p><div class="dialog-actions"><button value="cancel">取消</button><button value="send" class="primary">确认发送</button></div></form></dialog>
+<script type="module" src="options.js"></script>
+</body></html>

@@ -1,0 +1,9 @@
+node_modules/
+dist/
+*.zip
+.env
+.env.*
+*.log
+coverage/
+实机验收记录.md
+release-staging/
