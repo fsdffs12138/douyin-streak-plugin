@@ -2,17 +2,19 @@
 
 在抖音网页版聊天窗口内，选择好友或群聊，读取原生表情，并按北京时间安排每日发送。
 
-当前版本：**1.2.0** · Chrome Manifest V3 · TypeScript · 本机保存配置
+当前版本：**1.3.0** · Chrome Manifest V3 · TypeScript · 本机保存配置
 
 > 电脑必须开机且不休眠，Chrome 和已登录的抖音聊天页必须保持打开。当前版本不提供云端执行，也不能保证消息送达或火花续期成功。
 
 [下载安装包](https://github.com/fsdffs12138/douyin-streak-plugin/releases/latest) · [更新记录](CHANGELOG.md) · [验证范围](docs/TESTING.md)
 
+1.3.0 重做聊天浮窗和独立配置页：统一灰紫底色、青色主要操作、细边框与圆角分组，并更新扩展管理页和浏览器工具栏的火焰图标。
+
 ## 功能
 
 | 功能 | 说明 |
 | --- | --- |
-| 聊天页内面板 | 拖动、缩放、收起；无需一直打开独立配置页 |
+| 聊天页内面板 | 灰紫配色、新火焰标识、统一功能图标；支持拖动、缩放、收起 |
 | 一键读取会话 | 自动滚动虚拟列表、等待分页、去重并恢复原位置；可中途停止 |
 | 好友与群聊 | 按名称或类型筛选、勾选；确认界面和记录明确标注群聊 |
 | 原生表情 | 支持网页可读取的普通小表情、贴纸和收藏表情；插件内选择只预览 |
@@ -24,7 +26,7 @@
 
 ### 使用发布包
 
-1. 在 [Releases](https://github.com/fsdffs12138/douyin-streak-plugin/releases) 下载 **`douyin-streak-v1.2.0.zip`** 并解压到固定目录。不要选择 GitHub 自动生成的 `Source code`，源码包需要自行构建。
+1. 在 [Releases](https://github.com/fsdffs12138/douyin-streak-plugin/releases) 下载 **`douyin-streak-v1.3.0.zip`** 并解压到固定目录。不要选择 GitHub 自动生成的 `Source code`，源码包需要自行构建。
 2. 停用其他续火扩展或油猴脚本，避免多套任务同时运行。
 3. 在 Chrome 地址栏打开 `chrome://extensions`，开启「开发者模式」。
 4. 点击「加载已解压的扩展程序」，选择解压后的 **`dist` 文件夹**，不要选择 ZIP 或项目根目录。

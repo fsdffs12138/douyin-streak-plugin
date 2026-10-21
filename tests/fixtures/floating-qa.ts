@@ -9,7 +9,7 @@ body{margin:0;background:#424355;color:#fff;font:15px 'Segoe UI',sans-serif}head
 #spacer{position:relative}.fixture-row{position:absolute;left:0;right:0;height:64px;padding:10px;box-sizing:border-box;border-bottom:1px solid #555;display:flex;gap:10px;align-items:center}
 .commonIMAvataravatarContainer img{width:35px;height:35px;background:#79e3c3;border-radius:50%}.conversationConversationItemtitle{font-weight:600}
 main{margin:100px 470px 0 330px;line-height:1.8}#audit{white-space:pre-wrap;font-size:13px;color:#adedd8}
-</style><header>续火 1.2.0 · 本地混合列表验证 · 虚构会话，不具备发送能力</header>
+</style><header>续火 1.3.0 · 本地混合列表验证 · 虚构会话，不具备发送能力</header>
 <div class="conversationConversationListwrapper"><div id="spacer"></div></div>
 <main><h2>测试会话保持打开</h2><p>180 个虚构会话：144 个好友、36 个群聊，分三页加载；初始滚动位置 640。面板使用正式代码。</p><output id="audit"></output></main>`;
 const list=document.querySelector<HTMLElement>('.conversationConversationListwrapper')!;

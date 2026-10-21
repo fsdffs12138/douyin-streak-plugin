@@ -1,5 +1,9 @@
 import {defaults,dayAt,validImage,conversationLabel,type State,type Person,type Emoji,type Settings,type Binding} from './model';
+import {icon,type IconName} from './icons';
 const $=<T extends HTMLElement=HTMLElement>(id:string)=>document.getElementById(id) as T;
+for(const [id,name] of Object.entries({pause:'pause',refreshTabs:'refresh',bind:'link',readPeople:'scan',readEmoji:'download',save:'save',dry:'inspect',run:'send',export:'download'})){
+  const template=document.createElement('template');template.innerHTML=icon(name as IconName);$(id)?.prepend(template.content);
+}
 let current=defaults(),bound:Binding|null=null,people:Person[]=[],emojis:Emoji[]=[],selected=new Map<string,Person>(),chosen:Emoji|null=null;
 let dirty=false,initialized=false;
 const labels:Record<string,string>={sending:'执行中',observed:'网页已出现',failed:'发送前停止',uncertain:'待核查',confirmed:'人工确认',skipped:'今日跳过'};

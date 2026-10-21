@@ -1,4 +1,6 @@
 import styles from './floating.css';
+import brand from '../public/brand.svg';
+import {icon} from './icons';
 import {defaults,validImage,conversationLabel,type State,type Binding,type Person,type Emoji,type Settings} from './model';
 import type {ScanProgress,ScanResult} from './scanner';
 
@@ -13,35 +15,35 @@ export function createFloatingPanel(bridge:PanelBridge) {
   const host=document.createElement('div');host.id=PANEL_HOST;
   const root=host.attachShadow({mode:'closed'});
   root.innerHTML=`<style>${styles}</style>
-    <button class="launcher" id="launcher" hidden aria-label="展开续火助手">续火</button>
+    <button class="launcher" id="launcher" hidden aria-label="展开续火助手">${brand}<span>续火</span></button>
     <div class="panel" id="panel" role="region" aria-label="续火助手">
-      <header class="header" id="drag"><div class="brand"><span class="mark">续</span><div><strong>续火助手</strong><small id="bound">当前聊天窗口 · 未连接</small></div></div><button class="ghost" id="collapse" aria-label="收起面板">收起</button></header>
+      <header class="header" id="drag"><div class="brand"><span class="mark" aria-hidden="true">${brand}</span><div><strong>续火助手</strong><small id="bound">当前聊天窗口 · 未连接</small></div></div><button class="icon-button ghost" id="collapse" aria-label="收起面板" title="收起面板">${icon('down')}</button></header>
       <div class="body">
-        <div id="notice" class="notice" role="status" aria-live="polite">在这里一键读取全部会话，无需自己翻页。</div>
-        <section><div class="row spread"><h3>会话名单</h3><span id="count" class="count">已读取 0 · 已选 0</span></div>
-          <div class="row"><button id="scan" class="primary" data-lock>一键读取全部会话</button><button id="stop" hidden>停止读取</button></div>
+        <div class="notice-wrap">${icon('info')}<div id="notice" class="notice" role="status" aria-live="polite">在这里一键读取全部会话，无需自己翻页。</div></div>
+        <section><div class="row spread section-heading"><h3>${icon('users')}会话名单</h3><span id="count" class="count">已读取 0 · 已选 0</span></div>
+          <div class="row scan-actions"><button id="scan" class="primary" data-lock>${icon('scan')}一键读取全部会话</button><button id="stop" hidden>${icon('stop')}停止读取</button></div>
           <progress id="progress" class="progress" hidden aria-label="读取会话进度"></progress>
-          <p>自动遍历左侧列表，不打开聊天记录。好友和群聊均可勾选；身份信息不完整的条目另行列出。</p>
-          <input id="filter" class="filter" type="search" placeholder="筛选会话" aria-label="筛选会话">
-          <select id="conversationKind" class="filter" aria-label="会话类型"><option value="">全部会话</option><option value="person">仅好友</option><option value="group">仅群聊</option></select>
-          <div class="row spread"><button id="select" class="tiny ghost" data-lock>勾选筛选结果</button><button id="clear" class="tiny ghost" data-lock>清空勾选</button></div>
+          <p class="scan-hint">自动遍历列表，读取后恢复原位置。</p>
+          <div class="filter-row"><label class="search-field">${icon('search')}<input id="filter" type="search" placeholder="筛选会话" aria-label="筛选会话"></label>
+          <div class="select-field"><select id="conversationKind" aria-label="会话类型"><option value="">全部会话</option><option value="person">仅好友</option><option value="group">仅群聊</option></select>${icon('down')}</div></div>
+          <div class="row spread selection-tools"><button id="select" class="tiny text-button" data-lock>勾选筛选结果</button><button id="clear" class="tiny text-button accent-text" data-lock>清空勾选</button></div>
           <div id="people" class="people"><div class="empty">点击上方按钮，自动读取左侧全部会话。</div></div>
           <details id="skippedDetails" hidden><summary id="skippedSummary"></summary><div id="skippedRows" class="records"></div></details>
         </section>
-        <section><div class="row spread"><h3>原生表情</h3><button id="emojiLoad" class="tiny" data-lock>读取表情</button></div>
+        <section><div class="row spread section-heading"><h3>${icon('smile')}原生表情</h3><button id="emojiLoad" class="tiny" data-lock>${icon('download')}读取表情</button></div>
           <div id="preview" class="preview">尚未选择表情</div>
-          <details id="emojiDetails"><summary>选择表情</summary><input id="emojiFilter" type="search" placeholder="搜索表情名称" aria-label="搜索表情名称"><div id="emojis" class="grid"></div></details>
+          <details id="emojiDetails"><summary>选择表情${icon('right')}</summary><label class="search-field">${icon('search')}<input id="emojiFilter" type="search" placeholder="搜索表情名称" aria-label="搜索表情名称"></label><div id="emojis" class="grid"></div></details>
         </section>
-        <section><div class="row spread"><h3>发送计划</h3><button id="bind" class="tiny" data-lock>连接当前会话</button></div>
+        <section><div class="row spread section-heading"><h3>${icon('clock')}发送计划</h3><button id="bind" class="tiny" data-lock>${icon('link')}连接当前会话</button></div>
           <div class="two"><label>每日时间（北京时间）<input id="time" type="time" value="09:00"></label><label>补发窗口 / 分钟<input id="grace" type="number" min="0" max="720" value="180"></label></div>
-          <label class="check"><input id="enabled" type="checkbox">启用每日定时发送</label>
-          <p>读取不会自动发送。最多选择 100 个对象；发送前需连接有本人历史消息的会话。</p>
-          <div class="actions"><button id="save" class="primary" data-lock>保存配置</button><button id="dry" data-lock>只检查，不发送</button><button id="run" data-lock>立即发送</button><button id="pause" class="danger">暂停全部</button></div>
+          <label class="check"><input id="enabled" class="switch" type="checkbox" role="switch">启用每日定时发送</label>
+          <p>最多选择 100 个对象，发送前需连接会话。</p>
+          <div class="actions"><button id="save" class="primary" data-lock>${icon('save')}保存配置</button><button id="dry" data-lock>${icon('inspect')}只检查，不发送</button><button id="run" data-lock>${icon('send')}立即发送</button><button id="pause" class="danger">${icon('pause')}暂停全部</button></div>
           <div id="confirm" class="confirm" hidden><strong>确认发送对象与表情</strong><p id="confirmText"></p><div class="row"><button id="confirmSend" class="primary" data-lock>确认发送</button><button id="confirmCancel">取消</button></div></div>
           <div id="task" class="status">自动发送默认关闭</div>
         </section>
-        <section><details><summary>最近执行记录</summary><div id="records" class="records">暂无记录</div></details></section>
-        <div class="footer">续火 1.2.0 · 本机保存 · 可拖动顶部 / 缩放右下角</div>
+        <section class="history-section"><details><summary><span>${icon('history')}最近执行记录</span>${icon('right')}</summary><div id="records" class="records">暂无记录</div></details></section>
+        <div class="footer">续火 1.3.0 · 本机保存<span>拖动顶部移动 · 右下角缩放</span></div>
       </div>
     </div>`;
   document.body.append(host);
@@ -53,6 +55,7 @@ export function createFloatingPanel(bridge:PanelBridge) {
     const el=document.createElement(tag);if(text)el.textContent=text;if(cls)el.className=cls;return el;
   }
   function img(src:string,cls='') {const el=element('img',undefined,cls);el.alt='';el.loading='lazy';el.referrerPolicy='no-referrer';if(validImage(src))el.src=src;return el;}
+  function avatar(p:Person) {const wrap=element('span',undefined,'avatar-wrap');wrap.append(element('span',p.name.replace(/^\[.*?\]\s*/,'').slice(0,1),'avatar-letter'));const photo=img(p.avatar,'avatar');photo.addEventListener('error',()=>photo.remove(),{once:true});wrap.append(photo);return wrap;}
   function lock(value:boolean) {busy=value;root.querySelectorAll<HTMLButtonElement>('[data-lock]').forEach(b=>b.disabled=value);}
   function bindAction(id:string,action:()=>Promise<void>) {
     $(id).addEventListener('click',async()=>{
@@ -70,7 +73,8 @@ export function createFloatingPanel(bridge:PanelBridge) {
         if(check.checked&&selected.size>=100){check.checked=false;notice('最多选择 100 个发送对象；读取名单不受此限制。',true);return;}
         check.checked?selected.set(p.id,p):selected.delete(p.id);dirty=true;renderPeople();
       });
-      row.append(check,img(p.avatar,'avatar'),element('span',conversationLabel(p),'person-name'),element('span',p.streak?(/^\d+$/.test(p.streak)?`${p.streak} 天`:p.streak):'','streak'));list.append(row);
+      const streak=element('span',undefined,'streak');if(p.streak){streak.innerHTML=icon('flame');streak.append(document.createTextNode(/^\d+$/.test(p.streak)?`${p.streak} 天`:p.streak));}
+      row.append(check,avatar(p),element('span',conversationLabel(p),'person-name'),streak);list.append(row);
     }
     if(!list.childElementCount)list.append(element('div',catalog.length?'没有匹配的会话':'点击上方按钮，自动读取左侧全部会话。','empty'));
     $('count').textContent=`已读取 ${catalog.length} · 已选 ${selected.size}`;
@@ -95,6 +99,7 @@ export function createFloatingPanel(bridge:PanelBridge) {
       initialized=true;renderPeople();renderEmoji();
     }
     $('bound').textContent=isBound()?'当前聊天窗口 · 已连接':'当前聊天窗口 · 未连接';
+    $('bound').classList.toggle('connected',isBound());
     $('task').textContent=current.active?'正在执行，请勿切换聊天会话':current.queue?'发送队列等待下一次检查':current.settings.enabled?`每日 ${current.settings.time} 自动发送`:'自动发送已关闭';
     const labels:Record<string,string>={sending:'执行中',observed:'网页已出现',uncertain:'待核查',failed:'发送前停止',confirmed:'人工确认',skipped:'今日跳过'};
     const records=$('records');records.replaceChildren();
@@ -103,7 +108,7 @@ export function createFloatingPanel(bridge:PanelBridge) {
     }
     if(!records.childElementCount)records.textContent='暂无记录';
   }
-  async function ensureBound() {if(!isBound()){await bridge.api('BIND');const data=await bridge.api('STATE');binding=data.binding;current=data.state;if(!isBound())throw Error('当前页面连接未完成');$('bound').textContent='当前聊天窗口 · 已连接';}}
+  async function ensureBound() {if(!isBound()){await bridge.api('BIND');const data=await bridge.api('STATE');binding=data.binding;current=data.state;if(!isBound())throw Error('当前页面连接未完成');$('bound').textContent='当前聊天窗口 · 已连接';$('bound').classList.add('connected');}}
   bindAction('scan',async()=>{
     const data=await bridge.api('STATE');if(data.state.active||data.state.queue)throw Error('请先暂停发送队列，再读取会话');
     controller=new AbortController();$('stop').hidden=false;$('progress').hidden=false;

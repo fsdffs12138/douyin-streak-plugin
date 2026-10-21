@@ -3,7 +3,7 @@
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>续火 · 抖音表情助手</title><link rel="stylesheet" href="options.css"></head>
 <body>
 <div class="app">
-  <header><div class="brand"><span class="logo">续</span><div><h1>续火</h1><p>抖音原生表情助手</p></div></div><div class="header-actions"><span id="connection" class="badge">尚未绑定</span><button id="pause" class="quiet">暂停全部</button></div></header>
+  <header><div class="brand"><img class="logo" src="brand.svg" alt=""><div><h1>续火助手</h1><p>抖音原生表情助手</p></div></div><div class="header-actions"><span id="connection" class="badge">尚未绑定</span><button id="pause" class="quiet">暂停全部</button></div></header>
   <div id="notice" role="status" aria-live="polite" class="notice">先绑定已登录的聊天页，再选择会话和表情。自动发送默认关闭。</div>
   <main>
     <section class="workspace">
@@ -46,7 +46,7 @@
       <details><summary>运行日志</summary><div id="logs" class="logs">暂无日志</div></details>
     </section>
   </main>
-  <footer>续火 1.2.0 · 也可直接使用聊天页内悬浮面板 · 配置与记录仅保存在本机</footer>
+  <footer>续火 1.3.0 · 也可直接使用聊天页内悬浮面板 · 配置与记录仅保存在本机</footer>
 </div>
 <dialog id="confirm"><form method="dialog"><h2>确认立即发送</h2><p id="confirmText"></p><p class="footnote">只执行尚未记录的今日任务。发送后无法由本插件撤回。</p><div class="dialog-actions"><button value="cancel">取消</button><button value="send" class="primary">确认发送</button></div></form></dialog>
 <script type="module" src="options.js"></script>

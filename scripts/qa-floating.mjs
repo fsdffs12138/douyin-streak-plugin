@@ -1,6 +1,6 @@
 import {build} from 'esbuild';
 import http from 'node:http';
-const {outputFiles}=await build({entryPoints:['tests/fixtures/floating-qa.ts'],bundle:true,write:false,format:'iife',target:'chrome120',loader:{'.css':'text'}});
+const {outputFiles}=await build({entryPoints:['tests/fixtures/floating-qa.ts'],bundle:true,write:false,format:'iife',target:'chrome120',loader:{'.css':'text','.svg':'text'}});
 const bundle=outputFiles[0].contents;
 http.createServer((req,res)=>{
   if(req.url==='/fixture.js'){res.writeHead(200,{'Content-Type':'text/javascript'}).end(bundle);return;}
